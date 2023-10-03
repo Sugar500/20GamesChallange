@@ -4,6 +4,7 @@
 #include "BirdCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Components/CapsuleComponent.h"
 
 
 // Sets default values
@@ -12,6 +13,8 @@ ABirdCharacter::ABirdCharacter()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	// In this program this is unneeded
 	PrimaryActorTick.bCanEverTick = false;
+
+	GetCapsuleComponent()->SetSimulatePhysics(true);
 }
 
 // Called when the game starts or when spawned
@@ -52,7 +55,8 @@ void ABirdCharacter::Launch(const FInputActionValue& Value)
 {
 	// Adding a force vector in the z-axis allows the character to be launch upwards
 	// Because the z-axis is up in 3D and I didn't feel like putting the extra effort into changing it
-	LaunchCharacter(FVector(0.f, 0.f, LaunchSpeed), false, false);
+	// LaunchCharacter(FVector(0.f, 0.f, LaunchSpeed), false, false);
+	GetCapsuleComponent()->AddImpulse(FVector(0.f, 0.f, LaunchSpeed));
 }
 
 // Called every frame

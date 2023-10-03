@@ -18,7 +18,9 @@ class GAME1_FLAPPYBIRD_API ABirdCharacter : public APaperCharacter
 public:
 	// Sets default values for this actor's properties
 	ABirdCharacter();
-
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,7 +38,6 @@ protected:
 	// The speed to launch the character
 	UPROPERTY(EditDefaultsOnly)
 	float LaunchSpeed = 5.f;
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+private:
+	TObjectPtr<UCapsuleComponent> CapsuleComponent = nullptr;
 };
