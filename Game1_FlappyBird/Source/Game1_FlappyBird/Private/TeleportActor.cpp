@@ -21,7 +21,6 @@ void ATeleportActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	BoxCollider->OnComponentHit.AddDynamic(this, &ATeleportActor::OnHit);
 	BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &ATeleportActor::OnOverlap);
 }
 
@@ -29,13 +28,6 @@ void ATeleportActor::BeginPlay()
 void ATeleportActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-}
-
-void ATeleportActor::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
-		UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Actor Hit!"));
-	//OtherActor->SetActorLocation(TeleportLocation->GetActorLocation());
 }
 
 void ATeleportActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

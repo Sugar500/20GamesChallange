@@ -5,7 +5,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/CapsuleComponent.h"
-
+#include "GameFramework/GameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABirdCharacter::ABirdCharacter()
@@ -35,6 +36,9 @@ void ABirdCharacter::BeginPlay()
 
 	// Main Input Mapping is Primary (only in this game) Input
 	Subsystem->AddMappingContext(MainInputMapping, 0);
+
+	UCapsuleComponent* Collider = AActor::FindComponentByClass<UCapsuleComponent>();
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &ABirdCharacter::OnBeginOverlap);
 }
 
 // Called to bind functionality to input
@@ -57,6 +61,13 @@ void ABirdCharacter::Launch(const FInputActionValue& Value)
 	// Because the z-axis is up in 3D and I didn't feel like putting the extra effort into changing it
 	// LaunchCharacter(FVector(0.f, 0.f, LaunchSpeed), false, false);
 	GetCapsuleComponent()->AddImpulse(FVector(0.f, 0.f, LaunchSpeed));
+}
+
+void ABirdCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	const FName levelName = GetWorld()->GetAuthGameMode()->GetLevel()->GetFName();
+	UGameplayStatics::OpenLevel(GetWorld(), levelName, false);
 }
 
 // Called every frame
