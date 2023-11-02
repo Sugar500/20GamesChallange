@@ -33,6 +33,5 @@ void ATeleportActor::Tick(float DeltaTime)
 void ATeleportActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Actor Overlap!"));
 	OtherActor->SetActorLocation(TeleportLocation->GetActorLocation());
 }

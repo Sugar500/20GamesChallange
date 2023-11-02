@@ -9,6 +9,7 @@
 class UInputMappingContext;
 struct FInputActionValue;
 class UInputAction;
+class ULaunchComponent;
 
 UCLASS()
 class GAME1_FLAPPYBIRD_API ABirdCharacter : public APaperCharacter
@@ -27,9 +28,6 @@ protected:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	// Called to launch the character in the z-axis by LaunchSpeed
-	void Launch(const FInputActionValue& Value);
-
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -38,10 +36,11 @@ protected:
 	TObjectPtr<UInputMappingContext> MainInputMapping;
 	UPROPERTY(EditDefaultsOnly, Category="Enhanced Input")
 	TObjectPtr<UInputAction> IA_JumpAction;
-
-	// The speed to launch the character
-	UPROPERTY(EditDefaultsOnly)
-	float LaunchSpeed = 5.f;
+	
 private:
-	TObjectPtr<UCapsuleComponent> CapsuleComponent = nullptr;
+	// Called to launch the character in the z-axis by LaunchSpeed
+	void Launch(const FInputActionValue& Value);
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<ULaunchComponent> LaunchComponent = nullptr;
 };

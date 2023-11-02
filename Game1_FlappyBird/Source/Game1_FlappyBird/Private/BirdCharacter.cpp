@@ -4,6 +4,9 @@
 #include "BirdCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "LandscapeComponent.h"
+#include "LaunchComponent.h"
+#include "ResetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/GameModeBase.h"
 #include "Kismet/GameplayStatics.h"
@@ -16,6 +19,8 @@ ABirdCharacter::ABirdCharacter()
 	PrimaryActorTick.bCanEverTick = false;
 
 	GetCapsuleComponent()->SetSimulatePhysics(true);
+
+	LaunchComponent = CreateDefaultSubobject<ULaunchComponent>(TEXT("MovementComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -55,20 +60,21 @@ void ABirdCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Component->BindAction(IA_JumpAction, ETriggerEvent::Triggered, this, &ThisClass::Launch);
 }
 
-void ABirdCharacter::Launch(const FInputActionValue& Value)
-{
-	// Adding a force vector in the z-axis allows the character to be launch upwards
-	// Because the z-axis is up in 3D and I didn't feel like putting the extra effort into changing it
-	// LaunchCharacter(FVector(0.f, 0.f, LaunchSpeed), false, false);
-	GetCapsuleComponent()->AddImpulse(FVector(0.f, 0.f, LaunchSpeed));
-}
-
 void ABirdCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	const FName levelName = GetWorld()->GetAuthGameMode()->GetLevel()->GetFName();
-	UGameplayStatics::OpenLevel(GetWorld(), levelName, false);
+	// If the other actor has a reset component
+	if(const UResetComponent* ResetComponent = OtherActor->GetComponentByClass<UResetComponent>();
+		ResetComponent != nullptr)
+	{
+		// Reset the level
+		const FName LevelName = GetWorld()->GetAuthGameMode()->GetLevel()->GetFName();
+		UGameplayStatics::OpenLevel(GetWorld(), LevelName, false);
+	}
+
+	
 }
+
 
 // Called every frame
 void ABirdCharacter::Tick(float DeltaTime)
@@ -76,3 +82,7 @@ void ABirdCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void ABirdCharacter::Launch(const FInputActionValue& Value)
+{
+	LaunchComponent->Launch();
+}
