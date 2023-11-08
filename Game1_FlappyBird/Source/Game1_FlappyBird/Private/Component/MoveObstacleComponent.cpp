@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MoveObstacle.h"
+#include "Component/MoveObstacleComponent.h"
 
 
 // Sets default values for this component's properties
-UMoveObstacle::UMoveObstacle()
+UMoveObstacleComponent::UMoveObstacleComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -14,14 +14,14 @@ UMoveObstacle::UMoveObstacle()
 
 
 // Called when the game starts
-void UMoveObstacle::BeginPlay()
+void UMoveObstacleComponent::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
 
 // Called every frame
-void UMoveObstacle::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UMoveObstacleComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 

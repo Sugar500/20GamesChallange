@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ResetComponent.h"
+#include "Component/ResetComponent.h"
 
 
 // Sets default values for this component's properties
@@ -10,8 +10,6 @@ UResetComponent::UResetComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
-
-	// ...
 }
 
 
@@ -19,9 +17,6 @@ UResetComponent::UResetComponent()
 void UResetComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
 
@@ -29,7 +24,4 @@ void UResetComponent::BeginPlay()
 void UResetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
-

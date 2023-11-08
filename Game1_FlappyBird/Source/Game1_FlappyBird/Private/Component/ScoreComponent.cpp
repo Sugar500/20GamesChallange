@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ScoreComponent.h"
+#include "Component/ScoreComponent.h"
 
-#include "ResetComponent.h"
+#include "Component/ResetComponent.h"
 
 
 // Sets default values for this component's properties
@@ -12,8 +12,6 @@ UScoreComponent::UScoreComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
-
-	// ...
 }
 
 
@@ -39,8 +37,7 @@ void UScoreComponent::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 	if(const UResetComponent* ResetComponent = OtherActor->GetComponentByClass<UResetComponent>();
 		ResetComponent == nullptr) return;
 	
-	if(const bool Bind = ChangeScoreDelegate.ExecuteIfBound(1); !Bind)
-		UE_LOG(LogTemp, Warning, TEXT("Delegate not Bound"));
+	ChangeScoreDelegate.Broadcast(ScoreValue);
 	
 }
 

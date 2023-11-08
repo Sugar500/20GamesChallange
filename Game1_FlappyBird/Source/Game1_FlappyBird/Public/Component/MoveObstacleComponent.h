@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "MoveObstacle.generated.h"
+#include "MoveObstacleComponent.generated.h"
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class GAME1_FLAPPYBIRD_API UMoveObstacle : public UActorComponent
+class GAME1_FLAPPYBIRD_API UMoveObstacleComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UMoveObstacle();
+	UMoveObstacleComponent();
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 							   FActorComponentTickFunction* ThisTickFunction) override;
