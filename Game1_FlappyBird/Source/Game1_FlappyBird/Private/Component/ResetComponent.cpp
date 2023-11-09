@@ -3,6 +3,9 @@
 
 #include "Component/ResetComponent.h"
 
+#include "GameFramework/GameModeBase.h"
+#include "Kismet/GameplayStatics.h"
+
 
 // Sets default values for this component's properties
 UResetComponent::UResetComponent()
@@ -12,6 +15,17 @@ UResetComponent::UResetComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
+// Called every frame
+void UResetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
+
+void UResetComponent::BroadcastPlayerDeath() const
+{
+	UE_LOG(LogTemp, Warning, TEXT("Player Died!"));
+	CallDeathDelegate.Broadcast();
+}
 
 // Called when the game starts
 void UResetComponent::BeginPlay()
@@ -19,9 +33,8 @@ void UResetComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
-
-// Called every frame
-void UResetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UResetComponent::ResetLevel() const
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	const FName LevelName = GetWorld()->GetAuthGameMode()->GetLevel()->GetFName();
+	UGameplayStatics::OpenLevel(GetWorld(), LevelName, false);
 }

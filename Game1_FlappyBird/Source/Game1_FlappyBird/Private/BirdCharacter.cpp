@@ -7,8 +7,6 @@
 #include "Component/LaunchComponent.h"
 #include "Component/ResetComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "GameFramework/GameModeBase.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABirdCharacter::ABirdCharacter()
@@ -67,11 +65,8 @@ void ABirdCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AA
 		ResetComponent != nullptr)
 	{
 		// Reset the level
-		const FName LevelName = GetWorld()->GetAuthGameMode()->GetLevel()->GetFName();
-		UGameplayStatics::OpenLevel(GetWorld(), LevelName, false);
+		ResetComponent->BroadcastPlayerDeath();
 	}
-
-	
 }
 
 
