@@ -23,7 +23,6 @@ void UResetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 void UResetComponent::BroadcastPlayerDeath() const
 {
-	UE_LOG(LogTemp, Warning, TEXT("Player Died!"));
 	CallDeathDelegate.Broadcast();
 }
 
