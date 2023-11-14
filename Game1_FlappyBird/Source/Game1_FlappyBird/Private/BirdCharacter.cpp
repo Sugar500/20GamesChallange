@@ -54,7 +54,7 @@ void ABirdCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	// Binding the function for jumping/launching on the jump action triggered
 	// This allows for the player to speed up as they continue to hold a bound key
-	Component->BindAction(IA_JumpAction, ETriggerEvent::Triggered, this, &ThisClass::Launch);
+	Component->BindAction(IA_JumpAction, ETriggerEvent::Started, this, &ThisClass::Launch);
 }
 
 void ABirdCharacter::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
